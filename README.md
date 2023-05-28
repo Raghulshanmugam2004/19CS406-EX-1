@@ -1,56 +1,61 @@
-# 19CS406-EX-1 IMPLEMENTATION OF STOP AND WAIT PROTOCOL
-# DATE : 
-16-03-2023
+# 19CS406-EX-1 STUDY OF SOCKET PROGRAMMING WITH CLIENT-SERVER MODEL
+# DATE :06\03\2023
 # AIM :
-To write a python program to perform stop and wait protocol
+To implement socket programming date and time display from client to server using TCPSockets
+
 # ALGORITHM :
-    1.Start the program.
+# Server:
 
-    2.Get the frame size from the user
+1. Create a server socket and bind it to port.
+2. Listen for new connection and when a connection arrives, accept it.
+3. Send server‟s date and time to the client.
+4. Read client‟s IP address sent by the client.
+5. Display the client details.
+6. Repeat steps 2-5 until the server is terminated.
+7. Close all streams.
+8. Close the server socket.
+9. Stop.
 
-    3.To create the frame based on the user request.
-    
-    4.To send frames to server from the client side.
-    
-    5.If your frames reach the server it will send ACK signal to client otherwise it will sendNACK signal to client.
-    
-    6.Stop the program
+# Client:
 
-# CLIENT PROGRAM :
+1. Create a client socket and connect it to the server‟s port number.
+2. Retrieve its own IP address using built-in function.
+3. Send its address to the server.
+4. Display the date & time sent by the server.
+5. Close the input and output streams.
+6. Close the client socket.
+7. Stop.
+
+# PROGRAM :
+# CLIENT:
 ```
-## Developed By : RAGHUL S
-## Reg No : 212222040128
 import socket
 s=socket.socket()
-s.bind(('localhost',8080))
+s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
+address={"165.165.80.80":"6A:08:AA:C2","165.165.79.1":"8A:BC:E3:FA"};
 while True:
-	i=input("ENter a data:")
-	c.send(i.encode())
-	ack=c.recv(1024).decode()
-	if ack:
-		print(ack)
-		continue
-	else:
-		c.close()
-		break
-   ```
-
-# SERVER PROGRAM :
+ ip=c.recv(1024).decode()
+ try:
+ c.send(address[ip].encode())
+ except KeyError:
+ c.send("Not Found".encode())
+ ```
+# SERVER:
 ```
 import socket
 s=socket.socket()
-s.connect(('localhost',8080))
-while True:
-	print(s.recv(1024).decode())
-	s.send("Recieved".encode())
+s.connect(('localhost',8000))
+print(s.getsockname())
+print(s.recv(1024).decode())
+s.send("acknowledgement recived from the server".encode())
 ```
+# OUTPUT:
 # CLIENT OUTPUT:
-![image](https://github.com/Raghulshanmugam2004/19CS406-EX-1/assets/119561118/a9cbeae9-92e8-433e-9747-94a84a3e89eb)
-
+![image](https://github.com/Raghulshanmugam2004/19CS406-EX-1/assets/119561118/18cc6b16-6ac4-4978-8fbe-e1b01594fb57)
 # SERVER OUTPUT:
-![image](https://github.com/Raghulshanmugam2004/19CS406-EX-1/assets/119561118/0895da3b-2eee-4604-ab50-50bbaec2ad8a)
-
+![image](https://github.com/Raghulshanmugam2004/19CS406-EX-1/assets/119561118/532ca890-9ec5-4396-889a-c7b622211b44)
 # RESULT:
-Thus, python program to perform stop and wait protocol was successfully executed.
+Thus, the program to implement socket programming date and time display from client to server using TCP Sockets was successfully executed.
+
